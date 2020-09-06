@@ -7,7 +7,7 @@ public interface CustomerAccountService {
     void add(CustomerAccount customerAccount);
 
     @Nullable
-    double getMoney(int customerId);
+    Double getMoney(int customerId);
 
     void setMoney(int customerId, double money);
 }

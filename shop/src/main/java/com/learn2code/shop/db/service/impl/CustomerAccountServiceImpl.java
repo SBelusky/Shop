@@ -19,7 +19,7 @@ public class CustomerAccountServiceImpl implements CustomerAccountService {
     }
 
     @Override
-    public double getMoney(int customerId) {
+    public Double getMoney(int customerId) {
         return customerAccountRepository.getMoney(customerId);
     }
 

@@ -40,23 +40,20 @@ public class ProductRepository {
         final String sql = "insert into product(merchant_id,name,description,price,created_at,available) values (?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-                ps.setInt(1,product.getMerchantId());
-                ps.setString(2,product.getName());
-                ps.setString(3,product.getDescription());
-                ps.setDouble(4,product.getPrice());
-                if (product.getCreateAt() == null){
-                    product.setCreateAt(Timestamp.from(Instant.now()));
-                }
-                ps.setTimestamp(5,product.getCreateAt());
-                ps.setInt(6,product.getAvailable());
-
-                return ps;
+            ps.setInt(1,product.getMerchantId());
+            ps.setString(2,product.getName());
+            ps.setString(3,product.getDescription());
+            ps.setDouble(4,product.getPrice());
+            if (product.getCreateAt() == null){
+                product.setCreateAt(Timestamp.from(Instant.now()));
             }
+            ps.setTimestamp(5,product.getCreateAt());
+            ps.setInt(6,product.getAvailable());
+
+            return ps;
         },keyHolder);
 
         if (keyHolder.getKey() != null){
@@ -79,12 +76,12 @@ public class ProductRepository {
     }
 
     public void delete(int id){
-        final String sql="delete from product where product.id=?";
+        final String sql="delete from product where id=?";
         jdbcTemplate.update(sql,id);
     }
 
     public void updateAvailable(int id, int newAvailable){
-        final String sql = "UPDATE product SET available = ? WHERE product_id = ?";
+        final String sql = "UPDATE product SET available = ? WHERE id = ?";
         jdbcTemplate.update(sql,newAvailable,id);
     }
 

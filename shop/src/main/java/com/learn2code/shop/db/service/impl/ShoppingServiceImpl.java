@@ -18,8 +18,11 @@ public class ShoppingServiceImpl implements ShoppingService {
     private CustomerAccountService customerAccountService;
     private BoughtProductService boughtProductService;
 
-    public ShoppingServiceImpl(ProductService productService) {
+    public ShoppingServiceImpl(ProductService productService, CustomerService customerService, CustomerAccountService customerAccountService, BoughtProductService boughtProductService) {
         this.productService = productService;
+        this.customerService = customerService;
+        this.customerAccountService = customerAccountService;
+        this.boughtProductService = boughtProductService;
     }
 
     @Override
