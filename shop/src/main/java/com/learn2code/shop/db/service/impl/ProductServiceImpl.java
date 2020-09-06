@@ -40,4 +40,9 @@ public class ProductServiceImpl implements ProductService {
     public void update(int id, UpdateProductRequest request) {
         productRepository.update(id,request);
     }
+
+    @Override
+    public void updateAvailableInternal(int id, int newAvailable) {
+        productRepository.updateAvailable(id, newAvailable);
+    }
 }
