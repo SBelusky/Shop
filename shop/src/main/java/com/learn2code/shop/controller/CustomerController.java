@@ -42,6 +42,7 @@ public class CustomerController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:8081")
     public ResponseEntity getAll() {
         List<Customer> customerList = customerService.getCustomers();
 
