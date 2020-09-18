@@ -1,0 +1,20 @@
+.no-wrap {
+    /*pokiaľ by sa mal text zariadkovať tak sa nezariadkuje*/
+    white-space: nowrap;
+}
+.link-fk-in-table {
+    color: #48c774;
+    padding: 0 0.2em;
+    border-bottom: 3px dotted #48c774;
+}
+.link-fk-in-table:hover {
+    border-bottom: 3px dotted black;
+}
+.title {
+    text-align: left;
+    font-size: 2em !important;
+}
+.grey-and-small-font {
+    font-size: initial;
+    color: grey;
+}
