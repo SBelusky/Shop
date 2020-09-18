@@ -1,17 +1,11 @@
 <template>
-  <div class="about">
-    <tabley></tabley>
-  </div>
+    <div class="about"></div>
 </template>
 <script>
-import Tabley from "@/components/Table.vue";
-
 export default {
-  components: {
-    Tabley,
-  },
-  data() {
-    return {};
-  },
+    components: {},
+    data() {
+        return {};
+    }
 };
 </script>

@@ -4,6 +4,8 @@
 
 package com.learn2code.shop.domain;
 
+import com.learn2code.shop.db.service.api.MerchantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +17,7 @@ public class Product {
     @Nullable
     private Integer id;
     @NonNull
-    private int merchantId;
+    private Merchant merchant;
     @NonNull
     private String name;
     @NonNull
@@ -26,17 +28,18 @@ public class Product {
     private Timestamp createAt;
     @NonNull
     private int available;
-
+    
     public Product() {
     }
 
-    public Product(int merchantId, @NonNull String name, @NonNull String description, double price, int available) {
-        this.merchantId = merchantId;
+    public Product(@Nullable Integer id, @NonNull Merchant merchant, @NonNull String name, @NonNull String description, double price, int available) {
+        this.id = id;
+        this.merchant = merchant;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.available = available;
         this.createAt = Timestamp.from(Instant.now());
+        this.available = available;
     }
 
     @Nullable
@@ -46,14 +49,6 @@ public class Product {
 
     public void setId(@Nullable Integer id) {
         this.id = id;
-    }
-
-    public int getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(int merchantId) {
-        this.merchantId = merchantId;
     }
 
     @NonNull
@@ -99,24 +94,31 @@ public class Product {
         this.available = available;
     }
 
+    @NonNull
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(@NonNull Merchant merchant) {
+        this.merchant = merchant;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return merchantId == product.merchantId &&
-                Double.compare(product.price, price) == 0 &&
+        return Double.compare(product.price, price) == 0 &&
                 available == product.available &&
                 Objects.equals(id, product.id) &&
+                merchant.equals(product.merchant) &&
                 name.equals(product.name) &&
                 description.equals(product.description) &&
-                createAt.getTime() == product.getCreateAt().getTime();
-
-
+                Objects.equals(createAt, product.createAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, merchantId, name, description, price, createAt, available);
+        return Objects.hash(id, merchant, name, description, price, createAt, available);
     }
 }

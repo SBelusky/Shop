@@ -26,6 +26,13 @@ public class Merchant {
         this.address = address;
     }
 
+    public Merchant(@Nullable Integer id, @NonNull String name, @NonNull String email, @NonNull String address) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+    }
+
     @Nullable
     public Integer getId() {
         return id;
@@ -76,5 +83,15 @@ public class Merchant {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, email, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

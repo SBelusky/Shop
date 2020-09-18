@@ -1,10 +1,15 @@
 package com.learn2code.shop.controller;
 
 import com.learn2code.shop.db.service.api.MerchantService;
+import com.learn2code.shop.db.service.api.ProductService;
 import com.learn2code.shop.domain.Merchant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 
@@ -12,6 +17,8 @@ import java.util.List;
 @RequestMapping("merchant")
 public class MerchantController {
     private final MerchantService merchantService;
+    @Autowired
+    ProductService productService;
 
     public MerchantController(MerchantService merchantService) {
         this.merchantService = merchantService;
@@ -37,7 +44,6 @@ public class MerchantController {
         else
             return new ResponseEntity<>(merchant, HttpStatus.OK);
     }
-
     @GetMapping
     public ResponseEntity getAll(){
         List<Merchant> merchantList = merchantService.getMerchants();

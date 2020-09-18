@@ -5,14 +5,11 @@ import com.learn2code.shop.db.service.api.request.UpdateProductRequest;
 import com.learn2code.shop.domain.Product;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -27,7 +24,21 @@ public class ProductRepository {
     }
 
     public Product get(int id){
-        final String sql = "select * from product where product.id="+id;
+        final String sql = "select \n" +
+                "product.id AS product_id,\n" +
+                "product.merchant_id AS product_merchant_id,\n" +
+                "product.name AS product_name,\n" +
+                "product.description AS product_description,\n" +
+                "product.price AS product_price,\n" +
+                "product.created_at AS product_created_at,\n" +
+                "product.available AS product_available,\n" +
+                "merchant.id AS merchant_id,\n" +
+                "merchant.name AS merchant_name,\n" +
+                "merchant.email AS merchant_email,\n" +
+                "merchant.address AS merchant_address\n" +
+                "from product\n" +
+                "INNER JOIN merchant ON product.merchant_id = merchant.id\n" +
+                "where product.id="+id;
         try{
             return jdbcTemplate.queryForObject(sql, productRowMapper);
         }
@@ -43,7 +54,7 @@ public class ProductRepository {
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1,product.getMerchantId());
+            ps.setInt(1,product.getMerchant().getId());
             ps.setString(2,product.getName());
             ps.setString(3,product.getDescription());
             ps.setDouble(4,product.getPrice());
@@ -65,7 +76,20 @@ public class ProductRepository {
     }
 
     public List<Product> getAll(){
-        final String sql= "select * from product";
+        final String sql= "select \n" +
+                "product.id AS product_id,\n" +
+                "product.merchant_id AS product_merchant_id,\n" +
+                "product.name AS product_name,\n" +
+                "product.description AS product_description,\n" +
+                "product.price AS product_price,\n" +
+                "product.created_at AS product_created_at,\n" +
+                "product.available AS product_available,\n" +
+                "merchant.id AS merchant_id,\n" +
+                "merchant.name AS merchant_name,\n" +
+                "merchant.email AS merchant_email,\n" +
+                "merchant.address AS merchant_address\n" +
+                "from product\n" +
+                "INNER JOIN merchant ON product.merchant_id = merchant.id\n";
 
         return jdbcTemplate.query(sql,productRowMapper);
     }
